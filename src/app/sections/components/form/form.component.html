@@ -1,0 +1,37 @@
+<div mat-dialog-title>
+  <mat-toolbar fxLayout fxLayoutAlign="space-between center">
+    <h3>{{ title }}</h3>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="emp_form" (ngSubmit)="saveData()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field class="outline">
+        <mat-label> Nombre de la seccion </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.El Quijote"
+          formControlName="nombreSec"
+        />
+        <mat-icon matSuffix>title</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-button color="primary" type="button" mat-dialog-close>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="emp_form.invalid"
+    >
+      Grabar
+    </button>
+  </div>
+</form>

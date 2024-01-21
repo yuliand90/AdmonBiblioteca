@@ -1,0 +1,21 @@
+mat-toolbar {
+  background: #e2e2e2;
+  
+}
+.profile {
+  height: 100%;
+}
+.profile span {
+  color: black !important;
+}
+mat-toolbar mat-icon {
+  border-radius: 6px;
+}
+.profile mat-icon {
+  color: black !important;
+  
+}
+
+
+
+

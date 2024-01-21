@@ -1,0 +1,13 @@
+mat-form-field {
+    width: 100%;
+  }
+  .seccionFi {
+    width: 240px;
+    height: 56px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  

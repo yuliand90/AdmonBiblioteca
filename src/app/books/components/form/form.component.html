@@ -1,0 +1,103 @@
+<div mat-dialog-title>
+  <mat-toolbar fxLayout fxLayoutAlign="space-between center">
+    <h3>{{ title }}</h3>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="emp_form" (ngSubmit)="saveData()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field class="outline">
+        <mat-label> Titulo </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.El Quijote"
+          formControlName="titulo"
+        />
+        <mat-icon matSuffix>title</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="outline">
+        <mat-label> Autor </mat-label>
+        <mat-select formControlName="autor_per">
+          <mat-option *ngFor="let val of autores" [value]="val.value">
+            {{ val.text }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="outline">
+        <mat-label> Genero </mat-label>
+        <mat-select formControlName="genero_per">
+          <mat-option *ngFor="let val of generos" [value]="val">
+            {{ val }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>category</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="outline">
+        <mat-label>Estado de conservación</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.Medio deterioro"
+          formControlName="estado_conser"
+        />
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="outline">
+        <mat-label> Seccion fisica </mat-label>
+        <mat-select formControlName="seccion_per">
+          <mat-option *ngFor="let val of secciones" [value]="val.value">
+            {{ val.text }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="outline">
+        <mat-label>Disponibilidad</mat-label>
+        <mat-select formControlName="disponibilidad">
+          <mat-option *ngFor="let val of disponibilidad" [value]="val">
+            {{ val }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>book</mat-icon>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        type="textarea"
+        placeholder="ex. Es un buen libro..."
+        formControlName="descripcion"
+        class="fixed-height-textarea"
+      ></textarea>
+      <mat-icon matSuffix>description</mat-icon>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-button color="primary" type="button" mat-dialog-close>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="emp_form.invalid"
+    >
+      Grabar
+    </button>
+  </div>
+</form>

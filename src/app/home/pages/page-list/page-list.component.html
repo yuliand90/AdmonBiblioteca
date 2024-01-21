@@ -1,0 +1,33 @@
+<agb-title></agb-title>
+<agb-container>
+  <ng-scrollbar class="heightMaxScrollBar">
+    <h2>{{ tituloLibros }}</h2>
+    <div class="container cards">
+      <mat-card *ngFor="let card of cards()">
+        <mat-card-header>
+          <mat-card-title>
+            {{ card.title }}
+          </mat-card-title>
+        </mat-card-header>
+        <br />
+        <img mat-card-image [src]="card.imgUrl" />
+        <mat-card-content>
+          <br />
+          <p>
+            {{ card.description }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="primary">
+            <mat-icon>book</mat-icon>
+            {{ card.estado }}
+          </button>
+          <button mat-stroked-button color="warn">
+            <mat-icon>book</mat-icon>
+            {{ card.genero }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-scrollbar>
+</agb-container>

@@ -1,0 +1,107 @@
+<div mat-dialog-title>
+  <mat-toolbar fxLayout fxLayoutAlign="space-between center">
+    <h3>{{ title }}</h3>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="emp_form" (ngSubmit)="saveData()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label> Cedula </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.0502316334"
+          formControlName="cedula"
+          required="true"
+          [readonly]="isEdit"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label> Nombre </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.Alexander"
+          formControlName="nombre"
+          required="true"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label> Apellido </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.Jimenez"
+          formControlName="apellido"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label> Nacionalidad </mat-label>
+        <mat-select formControlName="nacionalidad">
+          <mat-option *ngFor="let val of nacionalidad" [value]="val">
+            {{ val }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="outline">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input
+          matInput
+          type="text"
+          (click)="fech_Nac.open()"
+          [matDatepicker]="fech_Nac"
+          formControlName="fecha_Nac"
+        />
+
+        <mat-hint>dd-mm-yyyy</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="fech_Nac">
+          <mat-icon matDatepickerToggleIcon>event</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #fech_Nac></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="outline">
+        <mat-label>Fecha de Descenso</mat-label>
+        <input
+          matInput
+          type="text"
+          (click)="fecha_Falle.open()"
+          [matDatepicker]="fecha_Falle"
+          formControlName="fecha_Falle"
+        />
+        <mat-hint>dd-mm-yyyy</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="fecha_Falle">
+          <mat-icon matDatepickerToggleIcon>event</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #fecha_Falle></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-button color="primary" type="button" mat-dialog-close>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="emp_form.invalid"
+    >
+      Grabar
+    </button>
+  </div>
+</form>

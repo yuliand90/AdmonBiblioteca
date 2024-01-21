@@ -1,0 +1,30 @@
+.informacion {
+  margin-left: 100px;
+}
+.informacion img {
+  max-width: 150px;
+}
+.informacion h2 {
+  color: white !important;
+  font-size: 42px;
+  line-height: 46px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
+
+.informacion mat-icon {
+  width: 150px;
+  height: 150px;
+}
+
+.login {
+  background: white;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background: url(/assets/imagenes/fondo.jpg);
+  background-size: cover;
+  background-position: center;
+}

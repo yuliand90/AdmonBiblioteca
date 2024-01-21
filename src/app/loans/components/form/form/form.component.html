@@ -1,0 +1,59 @@
+<div mat-dialog-title>
+  <mat-toolbar fxLayout fxLayoutAlign="space-between center">
+    <h3>{{ title }}</h3>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="emp_form" (ngSubmit)="saveData()">
+  <div mat-dialog-content class="content">
+    <mat-form-field class="outline">
+      <mat-label>Libros</mat-label>
+      <mat-select formControlName="id_libro">
+        <mat-option *ngFor="let val of libros" [value]="val.value">
+          {{ val.text }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>book</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="outline">
+      <mat-label>Estudiantes</mat-label>
+      <mat-select formControlName="id_usuario">
+        <mat-option *ngFor="let val of estudiantes" [value]="val.value">
+          {{ val.text }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>account_box</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="outline">
+      <mat-label>Fecha de Prestamo</mat-label>
+      <input
+        matInput
+        type="text"
+        (click)="fecha_in_pres.open()"
+        [matDatepicker]="fecha_in_pres"
+        formControlName="fecha_in_pres"
+      />
+      <mat-hint>dd-mm-yyyy</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="fecha_in_pres">
+        <mat-icon matDatepickerToggleIcon>event</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #fecha_in_pres></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-button color="primary" type="button" mat-dialog-close>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="emp_form.invalid"
+    >
+      Grabar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,127 @@
+<div mat-dialog-title>
+  <mat-toolbar fxLayout fxLayoutAlign="space-between center">
+    <h3>{{ title }}</h3>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="emp_form" (ngSubmit)="saveData()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label> Cedula </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.0502316334"
+          formControlName="cedula"
+          required="true"
+          [readonly]="isEdit"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label> Nombre </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.Alexander"
+          formControlName="nombre"
+          required="true"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label> Apellido </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.Jimenez"
+          formControlName="apellido"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label> Dirección </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.Latacunga"
+          formControlName="direccion"
+        />
+        <mat-icon matSuffix>location_on</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label> Celular </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.0999121207"
+          formControlName="celular"
+        />
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label> user </mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="ex.username"
+          formControlName="username"
+          required="true"
+        />
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label> Contraseña </mat-label>
+        <input
+          matInput
+          type="{{ togglePassword ? 'password' : 'text' }}"
+          formControlName="password"
+          required="true"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePassword = !togglePassword"
+        >
+          <mat-icon matSuffix>{{
+            togglePassword ? "lock" : "lock_open"
+          }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label> Rol </mat-label>
+        <mat-select formControlName="rol">
+          <mat-option *ngFor="let val of roles" [value]="val">
+            {{ val }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-button color="primary" type="button" mat-dialog-close>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="emp_form.invalid"
+    >
+      Grabar
+    </button>
+  </div>
+</form>

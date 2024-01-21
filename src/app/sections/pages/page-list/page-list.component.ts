@@ -1,0 +1,142 @@
+import { Component } from '@angular/core';
+import { DownloadComponent } from 'src/app/shared/components/download/download.component';
+import { KeypadButton } from 'src/app/shared/interfaces/keypadbutton.interface';
+import { MetaDataColumn } from 'src/app/shared/interfaces/metacolumn.interfaces';
+import { environment } from 'src/environments/environment.development';
+import { FormComponent } from '../../components/form/form.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { SeccionService } from '../../services/sections.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Section } from '../../models/sections.model';
+
+@Component({
+  selector: 'agb-page-list',
+  templateUrl: './page-list.component.html',
+  styleUrls: ['./page-list.component.css'],
+})
+export class PageListComponent {
+  secciones: Section[] = [];
+  metaDataColumns: MetaDataColumn[] = [
+    { field: 'idSeccion', title: 'ID' },
+    { field: 'nombreSec', title: 'Seccion' },
+  ];
+  constructor(
+    private _sectionService: SeccionService,
+    private bottomSheet: MatBottomSheet,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
+    this.changePage(0);
+  }
+  ngOnInit(): void {
+    this.loadSections();
+  }
+  data: any[] = [];
+
+  totalRecords = this.secciones.length;
+  keypadButtons: KeypadButton[] = [
+    {
+      icon: 'cloud_download',
+      tooltip: 'EXPORTAR',
+      color: 'accent',
+      action: 'DOWNLOAD',
+    },
+  ];
+
+  changePage(page: number) {
+    const pageSize = environment.PAGE_SIZE;
+    const skip = pageSize * page;
+    this.data = this.secciones.slice(skip, skip + pageSize);
+  }
+
+  loadSections() {
+    this._sectionService.loadSeccions().subscribe((data) => {
+      this.secciones = data;
+      this.totalRecords = this.secciones.length;
+      this.changePage(0);
+    });
+  }
+
+  openForm(row: any = null) {
+    const options = {
+      panelClass: 'panel-container',
+      disableClose: true,
+      data: row,
+    };
+    const reference: MatDialogRef<FormComponent> = this.dialog.open(
+      FormComponent,
+      options
+    );
+    reference.afterClosed().subscribe((response) => {
+      this.loadSections();
+    });
+  }
+
+  delete(idSeccion: string) {
+    const result = this.showMessageConfirm();
+    if (result) {
+      this._sectionService.deleteSeccion(idSeccion).subscribe((response) => {
+        this.showMessage('Registro eliminado correctamente');
+        this.loadSections();
+      });
+    }
+  }
+
+  doAction(action: string) {
+    switch (action) {
+      case 'DOWNLOAD':
+        this.showBottonSheet(
+          'Lista de Clientes',
+          'clientes',
+          this.secciones,
+          this.metaDataColumns
+        );
+        break;
+      case 'NEW':
+        this.openForm();
+        break;
+    }
+  }
+
+  showBottonSheet(
+    title: string,
+    fileName: string,
+    data: any,
+    metaDataColumn: MetaDataColumn[]
+  ) {
+    this.bottomSheet.open(DownloadComponent, {
+      data: { data: data, metaDataColumn: metaDataColumn },
+    });
+  }
+
+  showMessage(message: string, duration: number = 5000, action: string = 'Ok') {
+    this.snackBar.open(message, action, { duration, verticalPosition: 'top' });
+  }
+  showMessageConfirm(): boolean {
+    var result = false;
+    if (confirm('¿Está seguro de eliminar el registro?')) {
+      result = true;
+    }
+    return result;
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.length > 0) {
+      this.data = this.secciones.filter((seccion) => {
+        return (
+          seccion.idSeccion
+            .toString()
+            .toLowerCase()
+            .includes(filterValue.toLowerCase()) ||
+          seccion.nombreSec
+            .toString()
+            .toLowerCase()
+            .includes(filterValue.toLowerCase())
+        );
+      });
+    } else {
+      this.data = this.secciones;
+    }
+  }
+}
